@@ -61,7 +61,7 @@ def decode_story_string(array) -> str:
             if i[1]:
                 struct_array.append("<b>%s</b>" % text) # Bold
             else:
-                struct_array.append("<i>%s</i>" % text) # Italic
+                struct_array.append(text) # Default
         else:
             struct_array.append('<b>Произошла ошибка!</b>')
     struct_array = list(map(lambda x: md(x), struct_array))
