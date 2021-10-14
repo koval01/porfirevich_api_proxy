@@ -48,6 +48,13 @@ def fix_string(string) -> str:
     return string
 
 
+def prepare_element(el, bold=False) -> str or None:
+    if el[-1:] != " ": return
+    ptrn = "*"; if bold: ptrn = "**"
+    end = re.sub(r"(\w)\s", r"\1%s " % ptrn, el[-2:])
+    return ptrn + x.rstrip()[:-1] + end
+
+
 def decode_story_string(array) -> str:
     struct_array = []
     array = json.loads(array)
@@ -56,9 +63,13 @@ def decode_story_string(array) -> str:
         text = fix_string(text)
         if check_long_words_in_string(text):
             if i[1]:
-                struct_array.append('**%s**' % text) # Bold
-            else: 
-                struct_array.append('*%s*' % text) # Italic
+                x = prepare_element(text, True)
+                if not x: x = "**%s**" % text
+                struct_array.append(x) # Bold
+            else:
+                x = prepare_element(text)
+                if not x: x = "*%s*" % text
+                struct_array.append(x) # Italic
         else:
             struct_array.append('**Произошла ошибка!**')
     return ''.join(struct_array)
