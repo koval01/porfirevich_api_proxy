@@ -55,13 +55,12 @@ def decode_story_string(array) -> str:
         text = cleanhtml(i[0])
         text = fix_string(text)
         if check_long_words_in_string(text):
-            text = text.replace('\n', '</br>')
             if i[1]:
-                struct_array.append('<b>%s</b>' % text)
+                struct_array.append('**%s**' % text) # Bold
             else: 
-                struct_array.append('<i>%s</i>' % text)
+                struct_array.append('*%s*' % text) # Italic
         else:
-            struct_array.append('<b>Произошла ошибка!</b>')
+            struct_array.append('**Произошла ошибка!**')
     return ''.join(struct_array)
 
 
