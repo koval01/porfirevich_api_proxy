@@ -3,8 +3,11 @@ import logging, re, json
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
 from flask_cors import CORS
+
 from requests import get
 from time import time
+
+from markdownify import markdownify as md
 
 app = Flask(__name__)
 api = Api(app)
@@ -48,23 +51,6 @@ def fix_string(string) -> str:
     return string
 
 
-def prepare_element(el, bold=False, second_stage=False) -> str or None:
-    if not second_stage:
-        if el[-1:] != " ": return
-
-        ptrn = "*"; 
-        if bold: ptrn = "**"
-
-        end = re.sub(r"(\w)\s", r"\1%s " % ptrn, el[-2:])
-        return ptrn + el.rstrip()[:-1] + end
-    else:
-        a = el[0:1]; b = el.lstrip()[0:1]
-        if a == b: return
-        
-        else:
-            return re.sub(r"(\s*)(.*)", r"\1%s\2" % ptrn, el)
-
-
 def decode_story_string(array) -> str:
     struct_array = []
     array = json.loads(array)
@@ -73,17 +59,12 @@ def decode_story_string(array) -> str:
         text = fix_string(text)
         if check_long_words_in_string(text):
             if i[1]:
-                x = prepare_element(text, True)
-                if not x: x = "**%s**" % text
-                else: prepare_element(x, True, second_stage=True)
-                struct_array.append(x) # Bold
+                struct_array.append("<b>%s</b>" % text) # Bold
             else:
-                x = prepare_element(text)
-                if not x: x = "*%s*" % text
-                else: prepare_element(x, second_stage=True)
-                struct_array.append(x) # Italic
+                struct_array.append("<i>%s</i>" % text) # Italic
         else:
-            struct_array.append('**Произошла ошибка!**')
+            struct_array.append('<b>Произошла ошибка!</b>')
+    struct_array = list(map(lambda x: md(x), struct_array))
     return ''.join(struct_array)
 
 
