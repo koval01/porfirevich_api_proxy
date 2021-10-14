@@ -11,6 +11,19 @@ api = Api(app)
 CORS(app)
 
 
+def check_long_words_in_string(string) -> bool:
+    """
+    Проверка наличия слишком довгих слов/елементов в строке
+    """
+    status = True
+    s = string.split()
+    for i in s:
+        if len(i) > 29:
+            status = False
+
+    return status
+
+
 def cleanhtml(raw_html) -> str:
     cleanr = re.compile('<.*?>')
     cleantext = re.sub(cleanr, '', raw_html)
