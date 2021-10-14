@@ -70,7 +70,7 @@ class Random(Resource):
         json_data = response["data"]
         
         for el in json_data:
-            el["body"] = decode_story_string(el["body"])
+            el["content"] = decode_story_string(el["content"])
         
         return jsonify(json_data)
 
