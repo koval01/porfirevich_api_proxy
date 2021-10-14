@@ -58,11 +58,11 @@ def prepare_element(el, bold=False, second_stage=False) -> str or None:
         end = re.sub(r"(\w)\s", r"\1%s " % ptrn, el[-2:])
         return ptrn + el.rstrip()[:-1] + end
     else:
-        a = x[0:1]; b = x.lstrip()[0:1]
+        a = el[0:1]; b = el.lstrip()[0:1]
         if a == b: return
         
         else:
-            return re.sub(r"(\s*)(.*)", r"\1%s\2" % ptrn, x)
+            return re.sub(r"(\s*)(.*)", r"\1%s\2" % ptrn, el)
 
 
 def decode_story_string(array) -> str:
