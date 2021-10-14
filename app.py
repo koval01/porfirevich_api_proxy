@@ -48,14 +48,21 @@ def fix_string(string) -> str:
     return string
 
 
-def prepare_element(el, bold=False) -> str or None:
-    if el[-1:] != " ": return
-    
-    ptrn = "*"; 
-    if bold: ptrn = "**"
+def prepare_element(el, bold=False, second_stage=False) -> str or None:
+    if not second_stage:
+        if el[-1:] != " ": return
+
+        ptrn = "*"; 
+        if bold: ptrn = "**"
+
+        end = re.sub(r"(\w)\s", r"\1%s " % ptrn, el[-2:])
+        return ptrn + el.rstrip()[:-1] + end
+    else:
+        a = x[0:1]; b = x.lstrip()[0:1]
+        if a == b: return
         
-    end = re.sub(r"(\w)\s", r"\1%s " % ptrn, el[-2:])
-    return ptrn + el.rstrip()[:-1] + end
+        else:
+            return re.sub(r"(\s*)(.*)", r"\1%s\2" % ptrn, x)
 
 
 def decode_story_string(array) -> str:
@@ -68,10 +75,12 @@ def decode_story_string(array) -> str:
             if i[1]:
                 x = prepare_element(text, True)
                 if not x: x = "**%s**" % text
+                else: prepare_element(x, True, second_stage=True)
                 struct_array.append(x) # Bold
             else:
                 x = prepare_element(text)
                 if not x: x = "*%s*" % text
+                else: prepare_element(x, second_stage=True)
                 struct_array.append(x) # Italic
         else:
             struct_array.append('**Произошла ошибка!**')
