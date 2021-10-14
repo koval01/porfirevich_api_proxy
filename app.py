@@ -1,6 +1,6 @@
 import logging
 
-from flask import Flask, jsonify, request, g
+from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
 from flask_cors import CORS
 from requests import get
@@ -13,14 +13,11 @@ CORS(app)
 
 class status(Resource):
     def get(self) -> None:
-        g.start = time()
-        return jsonify({'run': True, "time": "%.5fs" % (time() - g.start)})
+        return jsonify({'run': True})
 
       
 class Random(Resource):
     def get(self) -> None:
-        g.start = time()
-        
         response = get(
           "https://porfirevich.ru/api/story",
           params={
@@ -31,7 +28,7 @@ class Random(Resource):
         ).json()
         json_data = response["data"]
         
-        return jsonify({'posts': json_data, "time": "%.5fs" % (time() - g.start)})
+        return jsonify(json_data)
 
 
 api.add_resource(status, '/')
