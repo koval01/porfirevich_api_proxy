@@ -1,5 +1,6 @@
 gunicorn
 requests
+markdownify
 Flask
 flask-restful
 Flask-Cors
