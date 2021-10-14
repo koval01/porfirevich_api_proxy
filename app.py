@@ -84,6 +84,9 @@ class Random(Resource):
         
         for el in json_data:
             el["content"] = decode_story_string(el["content"])
+            del el["description"], el["editId"], el["isBanned"], el["isDeleted"],
+                el["isPublic"], el["updatedAt"], el["userId"], el["viewsCount"],
+                el["violationsCount"], el["postcard"]
         
         return jsonify(json_data)
 
