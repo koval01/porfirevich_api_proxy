@@ -55,7 +55,7 @@ def prepare_element(el, bold=False) -> str or None:
     if bold: ptrn = "**"
         
     end = re.sub(r"(\w)\s", r"\1%s " % ptrn, el[-2:])
-    return ptrn + x.rstrip()[:-1] + end
+    return ptrn + el.rstrip()[:-1] + end
 
 
 def decode_story_string(array) -> str:
