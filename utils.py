@@ -5,7 +5,9 @@ from markdownify import markdownify as md
 
 def check_long_words_in_string(string: str) -> bool:
     """
-    Проверка наличия слишком довгих слов/елементов в строке
+    Checking for too long words / elements in a string
+    :param string: The string you want to check
+    :return: Bool result. If success - True or another False
     """
     status = True
     s = string.split()
@@ -17,12 +19,22 @@ def check_long_words_in_string(string: str) -> bool:
 
 
 def cleanhtml(raw_html: str) -> str:
+    """
+    Remove HTML tags from string
+    :param raw_html: HTML text string
+    :return: Clean string
+    """
     cleanr = re.compile('<.*?>')
     cleantext = re.sub(cleanr, '', raw_html)
     return cleantext
 
 
 def fix_string(string: str) -> str:
+    """
+    Fix known issues in the string
+    :param string: A string that needs to be checked and corrected
+    :return: Fixed string
+    """
     in_word = string
     in_between_words = ['-', '–']
     in_sentences = ['«', '(', '[', '{', '"', '„', '\'']
@@ -41,10 +53,20 @@ def fix_string(string: str) -> str:
 
 
 def remove_empty(array: list) -> list:
+    """
+    Detect and remove empty tags, to avoid confusion when converting to Markdown
+    :param array: Array to check
+    :return: Cleaned array
+    """
     return [t for t in array if not re.findall(r"<.></.>", t)]
 
 
 def decode_story_string(array: list) -> str:
+    """
+    Decoding content from the format we receive from Porfirevich to Markdown format
+    :param array: Porfirevich content array
+    :return: Markdown text
+    """
     array = [
         [fix_string(cleanhtml(el[0])), el[1]] 
         for el in json.loads(array) if check_long_words_in_string(el[0])
