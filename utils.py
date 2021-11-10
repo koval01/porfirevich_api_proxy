@@ -54,4 +54,4 @@ def decode_story_string(array: list) -> str:
         lambda x: "<b>%s</b>" % x[0] if x[1] else "<i>%s</i>" % x[0], array
     )))
             
-    return ''.join(list(map(lambda x: md(x), struct_array)))
+    return ''.join(list(map(lambda x: md(x), result)))
