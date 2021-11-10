@@ -9,13 +9,7 @@ def check_long_words_in_string(string: str) -> bool:
     :param string: The string you want to check
     :return: Bool result. If success - True or another False
     """
-    status = True
-    s = string.split()
-    for i in s:
-        if len(i) > 29:
-            status = False
-
-    return status
+    return not max([True for i in string.split() if len(i) > 29]+[False])
 
 
 def cleanhtml(raw_html: str) -> str:
@@ -24,9 +18,7 @@ def cleanhtml(raw_html: str) -> str:
     :param raw_html: HTML text string
     :return: Clean string
     """
-    cleanr = re.compile('<.*?>')
-    cleantext = re.sub(cleanr, '', raw_html)
-    return cleantext
+    return re.sub(r'<.*?>', '', raw_html)
 
 
 def fix_string(string: str) -> str:
