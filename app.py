@@ -29,6 +29,7 @@ class Random(Resource):
           }
         ).json()
         json_data = response["data"]
+        result = []
         
         for el in json_data:
             if check_len_story(el["content"]):
@@ -38,9 +39,10 @@ class Random(Resource):
                 del el["description"], el["editId"], el["isBanned"], el["isDeleted"]
                 del el["isPublic"], el["updatedAt"], el["userId"], el["viewsCount"] 
                 del el["violationsCount"], el["postcard"]
-             else: del el
+                
+                result.append(el)
         
-        return jsonify(json_data)
+        return jsonify(result)
 
 
 api.add_resource(status, '/')
