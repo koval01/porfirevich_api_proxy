@@ -6,7 +6,7 @@ from flask_cors import CORS
 
 from requests import get
 
-from utils import check_long_words_in_string, cleanhtml, fix_string, decode_story_string
+from utils import check_long_words_in_string, cleanhtml, fix_string, decode_story_string, check_len_story
 
 app = Flask(__name__)
 api = Api(app)
@@ -31,9 +31,13 @@ class Random(Resource):
         json_data = response["data"]
         
         for el in json_data:
-            el["content"] = decode_story_string(el["content"])
-            el["createdAt"] = el["createdAt"].replace("T", " ").replace(".000Z", "")
-            del el["description"], el["editId"], el["isBanned"], el["isDeleted"], el["isPublic"], el["updatedAt"], el["userId"], el["viewsCount"], el["violationsCount"], el["postcard"]
+            if check_len_story(el["content"]):
+                el["content"] = decode_story_string(el["content"])
+                el["createdAt"] = el["createdAt"].replace("T", " ").replace(".000Z", "")
+                
+                del el["description"], el["editId"], el["isBanned"], el["isDeleted"], 
+                    el["isPublic"], el["updatedAt"], el["userId"], el["viewsCount"], 
+                    el["violationsCount"], el["postcard"]
         
         return jsonify(json_data)
 
