@@ -65,7 +65,7 @@ def decode_story_string(array: list) -> str:
     ]
     
     result = remove_empty(list(map(
-        lambda x: "<b>%s</b>" % x[0] if x[1] else "<i>%s</i>" % x[0], array
+        lambda x: "<b>%s</b>" % x[0] if x[1] else x[0], array
     )))
             
     return ''.join(list(map(lambda x: md(x), result)))
