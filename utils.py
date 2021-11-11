@@ -53,6 +53,15 @@ def remove_empty(array: list) -> list:
     return [t for t in array if not re.findall(r"<.></.>", t)]
 
 
+def check_len_story(array: list) -> bool:
+    """
+    Check that the record does not exceed the maximum allowable length
+    :param array: Content array
+    :return: Bool result check. True if successfuly
+    """
+    return len("".join([el[0] for el in array])) < 2000
+
+
 def decode_story_string(array: list) -> str:
     """
     Decoding content from the format we receive from Porfirevich to Markdown format
