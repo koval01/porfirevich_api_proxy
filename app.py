@@ -35,9 +35,9 @@ class Random(Resource):
                 el["content"] = decode_story_string(el["content"])
                 el["createdAt"] = el["createdAt"].replace("T", " ").replace(".000Z", "")
                 
-                del el["description"], el["editId"], el["isBanned"], el["isDeleted"], 
-                    el["isPublic"], el["updatedAt"], el["userId"], el["viewsCount"], 
-                    el["violationsCount"], el["postcard"]
+                del el["description"], el["editId"], el["isBanned"], el["isDeleted"]
+                del el["isPublic"], el["updatedAt"], el["userId"], el["viewsCount"] 
+                del el["violationsCount"], el["postcard"]
         
         return jsonify(json_data)
 
