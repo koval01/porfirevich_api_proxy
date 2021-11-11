@@ -59,7 +59,7 @@ def check_len_story(array: list) -> bool:
     :param array: Content array
     :return: Bool result check. True if successfuly
     """
-    return len("".join([el[0] for el in array])) < 2000
+    return len("".join([el[0] for el in array])) < 800
 
 
 def decode_story_string(array: list) -> str:
