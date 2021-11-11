@@ -38,6 +38,7 @@ class Random(Resource):
                 del el["description"], el["editId"], el["isBanned"], el["isDeleted"]
                 del el["isPublic"], el["updatedAt"], el["userId"], el["viewsCount"] 
                 del el["violationsCount"], el["postcard"]
+             else: del el
         
         return jsonify(json_data)
 
