@@ -35,10 +35,7 @@ class Random(Resource):
             if check_len_story(el["content"]):
                 el["content"] = decode_story_string(el["content"])
                 el["createdAt"] = el["createdAt"].replace("T", " ").replace(".000Z", "")
-                
-                del el["description"], el["editId"], el["isBanned"], el["isDeleted"]
-                del el["isPublic"], el["updatedAt"], el["userId"], el["viewsCount"] 
-                del el["violationsCount"], el["postcard"]
+                del el["isPublic"], el["isBanned"], el["isDeleted"]
                 
                 result.append(el)
         
