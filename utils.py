@@ -41,6 +41,8 @@ def fix_string(string: str) -> str:
 
     for item in in_sentences:
         string = string.replace(f' {item} ', f' {item}')
+        string = re.sub(r"(\w)\n", r"\1", string)
+        
     return string
 
 
