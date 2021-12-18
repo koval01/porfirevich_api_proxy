@@ -75,8 +75,8 @@ def decode_story_string(array: list) -> str:
         for el in json.loads(array) if check_long_words_in_string(el[0])
     ]
     
-    result = remove_empty(list(map(
+    result = list(map(
         lambda x: "<b>%s</b>" % x[0] if x[1] else "<p>%s</p>" % x[0], array
-    )))
+    ))
             
     return ''.join(list(map(lambda x: md(x), result)))
